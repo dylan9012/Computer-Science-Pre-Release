@@ -225,10 +225,10 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             if JumpedOver[0] != Piece[0]:
                 take.append([Piece, JumpRow, JumpLeftColumn])
             while JumpedOver[0] != Piece[0] and ValidJump(Board, PlayersPieces, Piece, JumpRow + Direction,
-                                                          JumpLeftColumn - 1):
-                JumpRow += Direction
+                                                          JumpLeftColumn - 1): # Loops until the most possible takes made
+                JumpRow += Direction # - Updates new coordinates if the new iteration of take is successful
                 JumpLeftColumn -= 1
-                multiTakeLeft.append([Piece, JumpRow, JumpLeftColumn])
+                multiTakeLeft.append([Piece, JumpRow, JumpLeftColumn]) # - adds all iterations to list
 
         if ValidJump(Board, PlayersPieces, Piece, JumpRow, JumpRightColumn):
             JumpedOver = Board[NewRow][RightColumn]
@@ -236,10 +236,10 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             if JumpedOver[0] != Piece[0]:
                 take.append([Piece, JumpRow, JumpRightColumn])
                 while JumpedOver[0] != Piece[0] and ValidJump(Board, PlayersPieces, Piece, JumpRow + Direction,
-                                                              JumpRightColumn + 1):
-                    JumpRow += Direction
+                                                              JumpRightColumn + 1): # Loops until the most possible takes made
+                    JumpRow += Direction # - Updates new coordinates if the new iteration of take is successful
                     JumpRightColumn += 1
-                    multiTakeRight.append([Piece, JumpRow, JumpRightColumn])
+                    multiTakeRight.append([Piece, JumpRow, JumpRightColumn]) # - adds all iterations to list
 
         # Backwards -------------------------------------------------------------------------------------------------
         Direction *= -1
@@ -263,10 +263,10 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             if JumpedOver[0] != Piece[0]:
                 take.append([Piece, JumpRow, JumpLeftColumn])
             while JumpedOver[0] != Piece[0] and ValidJump(Board, PlayersPieces, Piece, JumpRow + Direction,
-                                                          JumpLeftColumn - 1): # Loops until the most possible jumps made
-                JumpRow += Direction
+                                                          JumpLeftColumn - 1): # Loops until the most possible takes made
+                JumpRow += Direction # - Updates new coordinates if the new iteration of take is successful
                 JumpLeftColumn -= 1
-                multiTakeLeft2.append([Piece, JumpRow, JumpLeftColumn])
+                multiTakeLeft2.append([Piece, JumpRow, JumpLeftColumn]) # - adds all iterations to list
 
         if ValidJump(Board, PlayersPieces, Piece, JumpRow, JumpRightColumn):
             JumpedOver = Board[NewRow][RightColumn]
@@ -275,15 +275,14 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
                 take.append([Piece, JumpRow, JumpRightColumn])
                 while JumpedOver[0] != Piece[0] and ValidJump(Board, PlayersPieces, Piece, JumpRow + Direction,
                                                               JumpRightColumn + 1):
-                    JumpRow += Direction
+                    JumpRow += Direction # - Updates new coordinates if the new iteration of take is successful
                     JumpRightColumn += 1
-                    multiTakeRight2.append([Piece, JumpRow, JumpRightColumn])
+                    multiTakeRight2.append([Piece, JumpRow, JumpRightColumn]) # - adds all iterations to list
 
     if len(take) > 0 or len(multiTakeLeft) > 0 or len(multiTakeRight) > 0:
         for each in take:
             NumberOfMoves += 1
             print(each[0], ' can take and move to ', each[1], ' , ', each[2])
-            print(each[0], each[1], each[2])
             ListOfMoves[NumberOfMoves].Piece = each[0]
             ListOfMoves[NumberOfMoves].NewRow = each[1]
             ListOfMoves[NumberOfMoves].NewColumn = each[2]
@@ -291,7 +290,7 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
         if len(multiTakeLeft) > 0:
             NumberOfMoves += 1
             print(multiTakeLeft[-1][0], ' can take and move to ', multiTakeLeft[-1][1], ' , ', multiTakeLeft[-1][2])
-            ListOfMoves[NumberOfMoves].Piece = multiTakeLeft[-1][0]
+            ListOfMoves[NumberOfMoves].Piece = multiTakeLeft[-1][0] # - chooses the last possible multitake for maximum take-age
             ListOfMoves[NumberOfMoves].NewRow = multiTakeLeft[-1][1]
             ListOfMoves[NumberOfMoves].NewColumn = multiTakeLeft[-1][2]
             ListOfMoves[NumberOfMoves].CanJump = True
