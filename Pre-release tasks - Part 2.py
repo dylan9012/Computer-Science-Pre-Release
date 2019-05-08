@@ -207,9 +207,7 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             
             if ValidMove(Board, NewRow2, LeftColumn):
                 print(Piece, ' can move to ', NewRow2, ' , ', LeftColumn)
-                print("Check")
                 NumberOfMoves += 1
-                print("Check")
                 ListOfMoves[NumberOfMoves].Piece = Piece
                 ListOfMoves[NumberOfMoves].NewRow = NewRow2
                 ListOfMoves[NumberOfMoves].NewColumn = LeftColumn
@@ -280,7 +278,7 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
     print('There are ', NumberOfMoves, ' possible moves')
     return ListOfMoves
 
-
+    
 def ListEmpty(ListOfMoves):
     if ListOfMoves[1].Piece == '':
         return True
@@ -453,13 +451,15 @@ def Game():
         PrintResult(A, B, NextPlayer)
 
 def Save(Board,A,B,filename):
+    if ".txt" not in filename:
+        filename+= ".txt"
     FileHandle = open(filename, 'w+')
     for item in A:
         for i in item:
-            FileHandle.write("{0}\n".format(str(i)))
+            FileHandle.write(str(i) + "\n")
     for item in B:
         for i in item:
-            FileHandle.write("{0}\n".format(str(i)))
+            FileHandle.write(str(i) + "\n")
     FileHandle.close
     
     

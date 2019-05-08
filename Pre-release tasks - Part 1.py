@@ -412,15 +412,10 @@ def StartPlayer():
 
 def scrape():
     games = []
-    files = []
+   
+    contents = os.listdir(os.getcwd())
 
-    directory = os.getcwd()
-    contents = os.listdir(directory)
-
-    for file in contents:
-        if os.path.isfile(file) == True:
-            files.append(file)
-    for game in files:
+    for game in contents:
         if "game" in game:
             games.append(game)
 
