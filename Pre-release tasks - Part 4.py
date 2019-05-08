@@ -234,8 +234,8 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             if JumpedOver[0] != Piece[0]:
                 take.append([Piece, JumpRow, JumpRightColumn])
                 while JumpedOver[0] != Piece[0] and ValidJump(Board, PlayersPieces, Piece, JumpRow + Direction,
-                                                              JumpRightColumn + 1):
-                    JumpRow += Direction
+                                                              JumpRightColumn + 1): # Loops to the next possible take
+                    JumpRow += Direction # Updates if successful
                     JumpRightColumn += 1
                     multiTakeRight.append([Piece, JumpRow, JumpRightColumn])
 
@@ -251,7 +251,7 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             ListOfMoves[NumberOfMoves].CanJump = True
         if len(multiTakeLeft) > 0:
             print(multiTakeLeft[-1][0], ' can take and move to ', multiTakeLeft[-1][1], ' , ', multiTakeLeft[-1][2])
-            ListOfMoves[NumberOfMoves].Piece = multiTakeLeft[-1][0]
+            ListOfMoves[NumberOfMoves].Piece = multiTakeLeft[-1][0] # -  Gets the last iteration from while statement for the max take available
             ListOfMoves[NumberOfMoves].NewRow = multiTakeLeft[-1][1]
             ListOfMoves[NumberOfMoves].NewColumn = multiTakeLeft[-1][2]
             ListOfMoves[NumberOfMoves].CanJump = True
