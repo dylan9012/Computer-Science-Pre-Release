@@ -289,24 +289,28 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             ListOfMoves[NumberOfMoves].NewColumn = each[2]
             ListOfMoves[NumberOfMoves].CanJump = True
         if len(multiTakeLeft) > 0:
+            NumberOfMoves += 1
             print(multiTakeLeft[-1][0], ' can take and move to ', multiTakeLeft[-1][1], ' , ', multiTakeLeft[-1][2])
             ListOfMoves[NumberOfMoves].Piece = multiTakeLeft[-1][0]
             ListOfMoves[NumberOfMoves].NewRow = multiTakeLeft[-1][1]
             ListOfMoves[NumberOfMoves].NewColumn = multiTakeLeft[-1][2]
             ListOfMoves[NumberOfMoves].CanJump = True
         if len(multiTakeRight) > 0:
+            NumberOfMoves += 1
             print(multiTakeRight[-1][0], ' can take and move to ', multiTakeRight[-1][1], ' , ', multiTakeRight[-1][2])
             ListOfMoves[NumberOfMoves].Piece = multiTakeRight[-1][0]
             ListOfMoves[NumberOfMoves].NewRow = multiTakeRight[-1][1]
             ListOfMoves[NumberOfMoves].NewColumn = multiTakeRight[-1][2]
             ListOfMoves[NumberOfMoves].CanJump = True
         if len(multiTakeLeft2) > 0:
+            NumberOfMoves += 1
             print(multiTakeLeft2[-1][0], ' can take and move to ', multiTakeLeft2[-1][1], ' , ', multiTakeLeft2[-1][2])
             ListOfMoves[NumberOfMoves].Piece = multiTakeLeft2[-1][0]
             ListOfMoves[NumberOfMoves].NewRow = multiTakeLeft2[-1][1]
             ListOfMoves[NumberOfMoves].NewColumn = multiTakeLeft2[-1][2]
             ListOfMoves[NumberOfMoves].CanJump = True
         if len(multiTakeRight2) > 0:
+            NumberOfMoves += 1
             print(multiTakeRight2[-1][0], ' can take and move to ', multiTakeRight2[-1][1], ' , ', multiTakeRight2[-1][2])
             ListOfMoves[NumberOfMoves].Piece = multiTakeRight2[-1][0]
             ListOfMoves[NumberOfMoves].NewRow = multiTakeRight2[-1][1]
