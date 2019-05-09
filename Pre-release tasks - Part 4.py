@@ -205,7 +205,16 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
         CurrentColumn = PlayersPieces[i][COLUMN]
         if PlayersPieces[i][DAME] == 1:
             Piece = Piece.upper()
+            for x in range(7):
+                NewRow += Direction
+                LeftColumn -= 1
+                RightColumn += 1
+                if ValidMove(Board, NewRow, LeftColumn):
+                    move.append([Piece, NewRow, LeftColumn])
+                if ValidMove(Board, NewRow, RightColumn):
+                    move.append([Piece, NewRow, RightColumn])
 
+    
         NewRow = CurrentRow + Direction
         LeftColumn = CurrentColumn - 1
         RightColumn = CurrentColumn + 1
