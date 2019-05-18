@@ -206,9 +206,9 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
         RightColumn = CurrentColumn + 1  # - Finds new possible right column
         if ValidMove(Board, NewRow, LeftColumn):  # - Checks if the left column move is a space or exists on board
             print(Piece, ' can move to ', NewRow, ' , ', LeftColumn)
-            NumberOfMoves += 1
-            ListOfMoves[NumberOfMoves].Piece = Piece
-            ListOfMoves[NumberOfMoves].NewRow = NewRow
+            NumberOfMoves += 1  # - Updates counter
+            ListOfMoves[NumberOfMoves].Piece = Piece  # - Adds piece for this move
+            ListOfMoves[NumberOfMoves].NewRow = NewRow  # -
             ListOfMoves[NumberOfMoves].NewColumn = LeftColumn
             ListOfMoves[NumberOfMoves].CanJump = False
         if ValidMove(Board, NewRow, RightColumn):
