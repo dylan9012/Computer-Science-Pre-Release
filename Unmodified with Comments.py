@@ -41,22 +41,22 @@ def CreateNewBoard(Board):
     for ThisRow in range(BOARD_SIZE):
         for ThisColumn in range(BOARD_SIZE):
             if (ThisRow + ThisColumn) % 2 == 0:
-                Board[ThisRow][ThisColumn] = UNUSED
+                Board[ThisRow][ThisColumn] = UNUSED  # - Places unused using this rule
             else:
-                Board[ThisRow][ThisColumn] = SPACE
+                Board[ThisRow][ThisColumn] = SPACE  # - Places spaces if not unused
     return Board
 
 
 def AddPlayerA(Board, A):
     for Index in range(1, NUMBER_OF_PIECES + 1):
-        PieceRow = A[Index][ROW]
-        PieceColumn = A[Index][COLUMN]
-        PieceDame = A[Index][DAME]
-        if PieceRow > -1:
+        PieceRow = A[Index][ROW]  # - Extracts piece row from list A
+        PieceColumn = A[Index][COLUMN]  # - Extracts piece column from list A
+        PieceDame = A[Index][DAME]  # - Extracts dame status from list A
+        if PieceRow > -1:  # - Adds if piece is in play
             if PieceDame == 1:
-                Board[PieceRow][PieceColumn] = 'A' + str(Index)
+                Board[PieceRow][PieceColumn] = 'A' + str(Index)  # - Capitalises if piece is a Dame
             else:
-                Board[PieceRow][PieceColumn] = 'a' + str(Index)
+                Board[PieceRow][PieceColumn] = 'a' + str(Index)  # - Else a regular piece
     return Board
 
 
@@ -87,57 +87,58 @@ def SetUpBoard(Board, A, B, FileFound):
         FileFound = True  # - Boolean value if file can be opened
         A = LoadPieces(FileHandle, A)  # - Loads Player A pieces from File
         B = LoadPieces(FileHandle, B)  # - Loads Player B pieces from File
-        FileHandle.close() # - Closes File
-        Board = CreateNewBoard(Board)  # - Uses i
-        Board = AddPlayerA(Board, A)
-        Board = AddPlayerB(Board, B)
+        FileHandle.close()  # - Closes File
+        Board = CreateNewBoard(Board)  # - Fills board with unused spaces and empty spaces
+        Board = AddPlayerA(Board, A)  # - Places Player A's pieces on board
+        Board = AddPlayerB(Board, B)  # - Places Player B's pieces on board
     except:
-        DisplayErrorCode(4)
+        DisplayErrorCode(4)  # - If the file does not exist, this procedure is called
     return Board, A, B, FileFound
 
 
 def PrintHeading():
     print('    ', end='')
     for BoardColumn in range(BOARD_SIZE):
-        print('{0:3}'.format(BoardColumn), end='   ')
+        print('{0:3}'.format(BoardColumn), end='   ')  # - Places numbers up to 7, formatted to be within 3 spaces
     print()
 
 
 def PrintRow(Board, ThisRow):
     print('   |', end='')
-    for BoardColumn in range(BOARD_SIZE):
+    for BoardColumn in range(BOARD_SIZE):  # -  0 to 7
         if Board[ThisRow][BoardColumn] == UNUSED:
-            print(Board[ThisRow][BoardColumn], end='|')
+            print(Board[ThisRow][BoardColumn], end='|')  # - Puts unused if unused
         else:
-            print(SPACE, end='|')
+            print(SPACE, end='|')  # - Puts space if space
     print()
 
 
 def PrintMiddleRow(Board, ThisRow):
-    print('{0:>2}'.format(ThisRow), end=' |')
+    print('{0:>2}'.format(ThisRow), end=' |')  # - Centers the row number to right of two spaces with an end statement
     for BoardColumn in range(BOARD_SIZE):
         if Board[ThisRow][BoardColumn] == UNUSED or Board[ThisRow][BoardColumn] == SPACE:
-            print(Board[ThisRow][BoardColumn], end='|')
+            print(Board[ThisRow][BoardColumn], end='|')  # - If a piece is not there, this end is printed this way
         else:
-            print('{0:>4}'.format(Board[ThisRow][BoardColumn]), end=' |')
+            print('{0:>4}'.format(Board[ThisRow][BoardColumn]), end=' |')  # - Else the piece is centered in the
+            # right of 4 spaces
     print()
 
 
 def PrintLine():
     print('   ', end='')
     for BoardColumn in range(BOARD_SIZE):
-        print('------', end='')
+        print('------', end='')  # - Once end is reached, prints dashes 7 times
     print('-')
 
 
 def DisplayBoard(Board):
-    PrintHeading()
-    PrintLine()
-    for ThisRow in range(BOARD_SIZE):
-        PrintRow(Board, ThisRow)
-        PrintMiddleRow(Board, ThisRow)
-        PrintRow(Board, ThisRow)
-        PrintLine()
+    PrintHeading()  # Prints numbers 1 to 7
+    PrintLine()  # - Prints dashes
+    for ThisRow in range(BOARD_SIZE):  # - 0 to 7
+        PrintRow(Board, ThisRow)  # - Deals with unused and used spaces on top
+        PrintMiddleRow(Board, ThisRow)  # - Puts piece if present or does same thing as print row
+        PrintRow(Board, ThisRow)  # - Deals with unused and used spaces on top
+        PrintLine()  # - Prints dashes
 
 
 def PrintPlayerPieces(A, B):
@@ -370,16 +371,17 @@ def Game():
     GameEnd = False  # - Boolean value for end of game
     FileFound = False  # - Boolean value for file found
     NextPlayer = 'a'  # - Starts game with player A by default
-    Board, A, B, FileFound = SetUpBoard(Board, A, B, FileFound)  # - Loads game if existing
+    Board, A, B, FileFound = SetUpBoard(Board, A, B, FileFound)  # - Loads game if existing and loads pieces onto Board
     if not FileFound:
         GameEnd = True
     while not GameEnd:
-        PrintPlayerPieces(A, B)
-        DisplayBoard(Board)
-        print('Next Player: ', NextPlayer)
-        ListOfMoves = ClearList(ListOfMoves)
+        PrintPlayerPieces(A, B)  # - Prints Player A's and Player B's stats and pieces
+        DisplayBoard(Board)  # - Prints board by places items from Board with formatting
+        print('Next Player: ', NextPlayer)  # - States next player
+        ListOfMoves = ClearList(ListOfMoves)  # - Clears list of ListOfMoves from previous move
         if NextPlayer == 'a':
-            ListOfMoves = ListPossibleMoves(Board, A, NextPlayer, ListOfMoves)
+            ListOfMoves = ListPossibleMoves(Board, A, NextPlayer, ListOfMoves)  # - Generates all the possible moves
+            # each piece can make
             if not ListEmpty(ListOfMoves):
                 PieceIndex = SelectMove(ListOfMoves)
                 Board, A, B = MakeMove(Board, A, B, ListOfMoves, PieceIndex)
