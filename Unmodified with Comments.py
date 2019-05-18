@@ -191,19 +191,19 @@ def ValidJump(Board, PlayersPieces, Piece, NewRow, NewColumn):
 
 def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
     if NextPlayer == 'a':
-        Direction = 1
+        Direction = 1  # - Sets direction based on player
     else:
         Direction = -1
-    NumberOfMoves = 0
-    for i in range(1, NUMBER_OF_PIECES + 1):
-        Piece = NextPlayer + str(i)
-        CurrentRow = PlayersPieces[i][ROW]
-        CurrentColumn = PlayersPieces[i][COLUMN]
+    NumberOfMoves = 0  # - Counter
+    for i in range(1, NUMBER_OF_PIECES + 1):  # - Loops through each piece
+        Piece = NextPlayer + str(i)  # - Sets piece based on i
+        CurrentRow = PlayersPieces[i][ROW]  # - Fetches row of piece
+        CurrentColumn = PlayersPieces[i][COLUMN]  # - Fetches column of piece
         if PlayersPieces[i][DAME] == 1:
-            Piece = Piece.upper()
-        NewRow = CurrentRow + Direction
-        LeftColumn = CurrentColumn - 1
-        RightColumn = CurrentColumn + 1
+            Piece = Piece.upper()  # - Capitalises if piece is a dame
+        NewRow = CurrentRow + Direction  # - Finds new possible row of piece
+        LeftColumn = CurrentColumn - 1  # - Finds new possible left column
+        RightColumn = CurrentColumn + 1  # - Finds new possible right column
         if ValidMove(Board, NewRow, LeftColumn):
             print(Piece, ' can move to ', NewRow, ' , ', LeftColumn)
             NumberOfMoves += 1
