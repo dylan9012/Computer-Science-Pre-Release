@@ -161,9 +161,9 @@ def ClearList(ListOfMoves):
 
 def ValidMove(Board, NewRow, NewColumn):
     Valid = False
-    if NewRow in range(BOARD_SIZE) and NewColumn in range(BOARD_SIZE):
+    if NewRow in range(BOARD_SIZE) and NewColumn in range(BOARD_SIZE):  # Checks if position exists in board
         if Board[NewRow][NewColumn] == SPACE:
-            Valid = True
+            Valid = True  # - If move location is a space then it is valid
     return Valid
 
 
@@ -204,7 +204,7 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
         NewRow = CurrentRow + Direction  # - Finds new possible row of piece
         LeftColumn = CurrentColumn - 1  # - Finds new possible left column
         RightColumn = CurrentColumn + 1  # - Finds new possible right column
-        if ValidMove(Board, NewRow, LeftColumn):
+        if ValidMove(Board, NewRow, LeftColumn):  # - Checks if the left column move is a space or exists on board
             print(Piece, ' can move to ', NewRow, ' , ', LeftColumn)
             NumberOfMoves += 1
             ListOfMoves[NumberOfMoves].Piece = Piece
