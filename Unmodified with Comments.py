@@ -28,12 +28,12 @@ class MoveRecord:
 
 def LoadPieces(FileHandle, PlayersPieces):
     for Index in range(NUMBER_OF_PIECES + 1):
-        PlayersPieces[Index][ROW] = int(FileHandle.readline())  # - Reads every first number in sequence to be Row
-        # and adds to PlayerPieces list
-        PlayersPieces[Index][COLUMN] = int(FileHandle.readline())  # - Reads every second number in sequence to be
-        # column and adds to PlayerPieces list
-        PlayersPieces[Index][DAME] = int(FileHandle.readline())  # - Reads every third number to be dame status and
-        # adds to PlayerPieces list
+        PlayersPieces[Index][ROW] = int(FileHandle.readline())  # - Reads first number in sequence to be number
+        # of moves then after first iteration reads to be row and adds to PlayerPieces
+        PlayersPieces[Index][COLUMN] = int(FileHandle.readline())  # - Reads second number in sequence to be
+        # number of dames then after first iteration reads to be column and adds to PlayerPieces
+        PlayersPieces[Index][DAME] = int(FileHandle.readline())  # - Reads third number to be unused then after first
+        # iteration reads to be dame status and adds to PlayerPieces list
     return PlayersPieces  # - Returns back into SetUpBoard
 
 
