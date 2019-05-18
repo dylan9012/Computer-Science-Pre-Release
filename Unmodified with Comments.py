@@ -48,7 +48,7 @@ def CreateNewBoard(Board):
 
 
 def AddPlayerA(Board, A):
-    for Index in range(1, NUMBER_OF_PIECES + 1):
+    for Index in range(1, NUMBER_OF_PIECES + 1):  # - Starts at 1 to jump stats index
         PieceRow = A[Index][ROW]  # - Extracts piece row from list A
         PieceColumn = A[Index][COLUMN]  # - Extracts piece column from list A
         PieceDame = A[Index][DAME]  # - Extracts dame status from list A
@@ -61,15 +61,15 @@ def AddPlayerA(Board, A):
 
 
 def AddPlayerB(Board, B):
-    for Index in range(1, NUMBER_OF_PIECES + 1):
-        PieceRow = B[Index][ROW]
-        PieceColumn = B[Index][COLUMN]
-        PieceDame = B[Index][DAME]
+    for Index in range(1, NUMBER_OF_PIECES + 1):  # - Starts at 1 to jump stats index
+        PieceRow = B[Index][ROW]  # - Extracts piece row from list A
+        PieceColumn = B[Index][COLUMN]  # - Extracts piece column from list A
+        PieceDame = B[Index][DAME]  # - Extracts dame status from list A
         if PieceRow > -1:
             if PieceDame == 1:
-                Board[PieceRow][PieceColumn] = 'B' + str(Index)
+                Board[PieceRow][PieceColumn] = 'B' + str(Index)  # - Capitalises if piece is a Dame
             else:
-                Board[PieceRow][PieceColumn] = 'b' + str(Index)
+                Board[PieceRow][PieceColumn] = 'b' + str(Index)  # - Else a regular piece
     return Board
 
 
