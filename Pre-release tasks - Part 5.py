@@ -332,14 +332,14 @@ def MakeMove(Board, PlayersPieces, OpponentsPieces, ListOfMoves, PieceIndex):
 
 def SwapPlayer(NextPlayer):
   if NextPlayer == 'a':
-    Skip = input("Do you wish to skip your turn?: ")
+    Skip = input("Player B: Do you wish to skip your turn?: ")
     if (Skip == 'Y') or (Skip == 'y'):
       return 'a'
     else:
       return 'b'
 
   if NextPlayer == 'b':
-    Skip = input("Do you wish to skip your turn?: ")
+    Skip = input("Player A: Do you wish to skip your turn?: ")
     if (Skip == 'Y') or (Skip == 'y'):
       return 'b'
     else:
@@ -386,40 +386,11 @@ def Game():
     PrintResult(A, B, NextPlayer)
 
 def CPU(ListOfMoves):
-  ValidPiece = False
-  while not ValidPiece:
-    Found = False
-    EndOfList = False
-    Piece = 'b'+str(random.randint(1,12))
-    Index = 0
-    if Piece == '':
-      EndOfList = True
-    while not Found and not EndOfList:
-      Index += 1
-      if ListOfMoves[Index].Piece == Piece:
-        Found = True
-      elif ListOfMoves[Index].Piece == '':
-        EndOfList = True
-    if Found:
-      ValidPiece = True
-  ChosenPieceIndex = Index
-  ValidMove = False
-  while not ValidMove:
-    RowString = random.randint(0,7)
-    ColumnString = random.randint(0,7)
-    NewRow = int(RowString)
-    NewColumn = int(ColumnString)
-    Found = False
-    EndOfList = False
-    Index = ChosenPieceIndex - 1
-    while not Found and not EndOfList:
-      Index += 1
-      if ListOfMoves[Index].Piece != Piece:
-        EndOfList = True
-      elif ListOfMoves[Index].NewRow == NewRow and ListOfMoves[Index].NewColumn == NewColumn:
-        Found = True
-    ValidMove = Found
-    return Index
+  EndIndex = 1
+  while ListOfMoves[EndIndex].Piece != '':
+    EndIndex += 1
+  Index = random.randint(1,EndIndex-1)
+  return Index
 
 
 
