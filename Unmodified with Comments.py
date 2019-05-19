@@ -6,6 +6,7 @@
 # Version number: 0.1.3
 
 
+# - Constants and stuff
 SPACE = '     '
 UNUSED = 'XXXXX'
 
@@ -17,7 +18,6 @@ COLUMN = 1
 DAME = 2
 
 
-# - Constants and stuff
 class MoveRecord:
     def __init__(self):  # - Assigns attributes to an object (each piece) in ListPossibleMoves
         self.Piece = ''
@@ -214,7 +214,7 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             ListOfMoves[NumberOfMoves].CanJump = False  # - Adds jump status (unable)
         if ValidMove(Board, NewRow, RightColumn):  # - Checks if the right column move is a space or exists on board
             print(Piece, ' can move to ', NewRow, ' , ', RightColumn)
-            NumberOfMoves += 1
+            NumberOfMoves += 1  # - Updates counter
             ListOfMoves[NumberOfMoves].Piece = Piece  # - Adds piece for this move
             ListOfMoves[NumberOfMoves].NewRow = NewRow  # - Adds row for this move
             ListOfMoves[NumberOfMoves].NewColumn = RightColumn  # - Adds column for this move
