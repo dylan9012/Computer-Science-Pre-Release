@@ -451,8 +451,7 @@ def Game():
 def Scrape():
     games = []
 
-    directory = os.getcwd()
-    contents = os.listdir(directory)
+    contents = os.listdir(os.getcwd())
 
     for game in contents:
         if "game" in game:
@@ -460,6 +459,8 @@ def Scrape():
 
     if len(games) == 0:
         DisplayErrorCode(5)
+
+    games.sort()
 
     for counter in range(0, len(games)):
         File = []

@@ -417,6 +417,8 @@ def scrape():
         if "game" in game:
             games.append(game)
 
+    games.sort()
+
     if len(games) == 0:
         DisplayErrorCode(5)
 

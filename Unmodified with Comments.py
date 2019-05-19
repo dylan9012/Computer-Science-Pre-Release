@@ -19,7 +19,7 @@ DAME = 2
 
 
 class MoveRecord:
-    def __init__(self):  # - Assigns attributes to an object (each piece) in ListPossibleMoves
+    def __init__(self):  # - Assigns attributes to an object (each move) in ListPossibleMoves
         self.Piece = ''
         self.NewRow = -1
         self.NewColumn = -1
