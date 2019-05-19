@@ -224,7 +224,9 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
                                                           JumpLeftColumn - 1):
                 JumpRow += Direction
                 JumpLeftColumn -= 1
-                JumpedOver = Board[NewRow + Direction][JumpLeftColumn - 1]
+                MiddlePieceRow = (CurrentRow + JumpRow) // 2
+                MiddlePieceColumn = (CurrentColumn + JumpLeftColumn) // 2
+                JumpedOver = Board[MiddlePieceRow][MiddlePieceColumn]
                 multiTakeLeft.append([Piece, JumpRow, JumpLeftColumn])
 
         if ValidJump(Board, PlayersPieces, Piece, JumpRow, JumpRightColumn):
@@ -236,7 +238,9 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
                                                               JumpRightColumn + 1):
                     JumpRow += Direction
                     JumpRightColumn += 1
-                    JumpedOver = Board[NewRow + Direction][JumpRightColumn + 1]
+                    MiddlePieceRow = (CurrentRow + JumpRow) // 2
+                    MiddlePieceColumn = (CurrentColumn + JumpRightColumn) // 2
+                    JumpedOver = Board[MiddlePieceRow][MiddlePieceColumn]
                     multiTakeRight.append([Piece, JumpRow, JumpRightColumn])
 
     if len(take) > 0 or len(multiTakeLeft) > 0 or len(multiTakeRight) > 0:  # new check to see if any takes

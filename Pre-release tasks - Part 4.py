@@ -162,26 +162,25 @@ def ValidMove(Board, NewRow, NewColumn):
 
 
 def ValidJump(Board, PlayersPieces, Piece, NewRow, NewColumn):
-  Valid = False
-  MiddlePiece = ''
-  Player = Piece[0].lower()
-  Index = int(Piece[1:])
-  if Player == 'a':
-    OppositePiecePlayer = 'b'
-  else:
-    OppositePiecePlayer = 'a'
-  if NewRow in range(BOARD_SIZE) and NewColumn in range(BOARD_SIZE):  
-    if Board[NewRow][NewColumn] == SPACE: 
-      CurrentRow = PlayersPieces[Index][ROW]
-      CurrentColumn = PlayersPieces[Index][COLUMN]
-      MiddlePieceRow = (CurrentRow + NewRow) // 2
-      MiddlePieceColumn = (CurrentColumn + NewColumn) // 2
-      MiddlePiece = Board[MiddlePieceRow][MiddlePieceColumn]
-      MiddlePiecePlayer = MiddlePiece[0].lower()
-      if MiddlePiecePlayer == OppositePiecePlayer or MiddlePiecePlayer != ' ':
-        Valid = True
-  return Valid
-
+    Valid = False
+    MiddlePiece = ''
+    Player = Piece[0].lower()
+    Index = int(Piece[1:])
+    if Player == 'a':
+        OppositePiecePlayer = 'b'
+    else:
+        OppositePiecePlayer = 'a'
+    if NewRow in range(BOARD_SIZE) and NewColumn in range(BOARD_SIZE):
+        if Board[NewRow][NewColumn] == SPACE:
+            CurrentRow = PlayersPieces[Index][ROW]
+            CurrentColumn = PlayersPieces[Index][COLUMN]
+            MiddlePieceRow = (CurrentRow + NewRow) // 2
+            MiddlePieceColumn = (CurrentColumn + NewColumn) // 2
+            MiddlePiece = Board[MiddlePieceRow][MiddlePieceColumn]
+            MiddlePiecePlayer = MiddlePiece[0].lower()
+            if MiddlePiecePlayer == OppositePiecePlayer or MiddlePiecePlayer != ' ':
+                Valid = True
+    return Valid
 
 
 def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
@@ -214,7 +213,6 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
                 if ValidMove(Board, NewRow, RightColumn):
                     move.append([Piece, NewRow, RightColumn])
 
-    
         NewRow = CurrentRow + Direction
         LeftColumn = CurrentColumn - 1
         RightColumn = CurrentColumn + 1
@@ -234,10 +232,13 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             if JumpedOver[0] != Piece[0]:
                 take.append([Piece, JumpRow, JumpLeftColumn])
             while JumpedOver[0] != Piece[0] and ValidJump(Board, PlayersPieces, Piece, JumpRow + Direction,
-                                                          JumpLeftColumn - 1): # Loops until the most possible takes made
-                JumpRow += Direction # - Updates new coordinates if the new iteration of take is successful
+                                                          JumpLeftColumn - 1):
+                JumpRow += Direction
                 JumpLeftColumn -= 1
-                multiTakeLeft.append([Piece, JumpRow, JumpLeftColumn]) # - adds all iterations to list
+                MiddlePieceRow = (CurrentRow + JumpRow) // 2
+                MiddlePieceColumn = (CurrentColumn + JumpLeftColumn) // 2
+                JumpedOver = Board[MiddlePieceRow][MiddlePieceColumn]
+                multiTakeLeft.append([Piece, JumpRow, JumpLeftColumn])
 
         if ValidJump(Board, PlayersPieces, Piece, JumpRow, JumpRightColumn):
             JumpedOver = Board[NewRow][RightColumn]
@@ -245,10 +246,13 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             if JumpedOver[0] != Piece[0]:
                 take.append([Piece, JumpRow, JumpRightColumn])
                 while JumpedOver[0] != Piece[0] and ValidJump(Board, PlayersPieces, Piece, JumpRow + Direction,
-                                                              JumpRightColumn + 1): # Loops until the most possible takes made
-                    JumpRow += Direction # - Updates new coordinates if the new iteration of take is successful
+                                                              JumpRightColumn + 1):
+                    JumpRow += Direction
                     JumpRightColumn += 1
-                    multiTakeRight.append([Piece, JumpRow, JumpRightColumn]) # - adds all iterations to list
+                    MiddlePieceRow = (CurrentRow + JumpRow) // 2
+                    MiddlePieceColumn = (CurrentColumn + JumpRightColumn) // 2
+                    JumpedOver = Board[MiddlePieceRow][MiddlePieceColumn]
+                    multiTakeRight.append([Piece, JumpRow, JumpRightColumn])
 
         # Backwards -------------------------------------------------------------------------------------------------
         Direction *= -1
@@ -272,10 +276,13 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             if JumpedOver[0] != Piece[0]:
                 take.append([Piece, JumpRow, JumpLeftColumn])
             while JumpedOver[0] != Piece[0] and ValidJump(Board, PlayersPieces, Piece, JumpRow + Direction,
-                                                          JumpLeftColumn - 1): # Loops until the most possible takes made
-                JumpRow += Direction # - Updates new coordinates if the new iteration of take is successful
+                                                          JumpLeftColumn - 1):
+                JumpRow += Direction
                 JumpLeftColumn -= 1
-                multiTakeLeft2.append([Piece, JumpRow, JumpLeftColumn]) # - adds all iterations to list
+                MiddlePieceRow = (CurrentRow + JumpRow) // 2
+                MiddlePieceColumn = (CurrentColumn + JumpLeftColumn) // 2
+                JumpedOver = Board[MiddlePieceRow][MiddlePieceColumn]
+                multiTakeLeft2.append([Piece, JumpRow, JumpLeftColumn])
 
         if ValidJump(Board, PlayersPieces, Piece, JumpRow, JumpRightColumn):
             JumpedOver = Board[NewRow][RightColumn]
@@ -284,9 +291,12 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
                 take.append([Piece, JumpRow, JumpRightColumn])
                 while JumpedOver[0] != Piece[0] and ValidJump(Board, PlayersPieces, Piece, JumpRow + Direction,
                                                               JumpRightColumn + 1):
-                    JumpRow += Direction # - Updates new coordinates if the new iteration of take is successful
+                    JumpRow += Direction
                     JumpRightColumn += 1
-                    multiTakeRight2.append([Piece, JumpRow, JumpRightColumn]) # - adds all iterations to list
+                    MiddlePieceRow = (CurrentRow + JumpRow) // 2
+                    MiddlePieceColumn = (CurrentColumn + JumpRightColumn) // 2
+                    JumpedOver = Board[MiddlePieceRow][MiddlePieceColumn]
+                    multiTakeRight2.append([Piece, JumpRow, JumpRightColumn])
 
     if len(take) > 0 or len(multiTakeLeft) > 0 or len(multiTakeRight) > 0:
         for each in take:
@@ -299,7 +309,7 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
         if len(multiTakeLeft) > 0:
             NumberOfMoves += 1
             print(multiTakeLeft[-1][0], ' can take and move to ', multiTakeLeft[-1][1], ' , ', multiTakeLeft[-1][2])
-            ListOfMoves[NumberOfMoves].Piece = multiTakeLeft[-1][0] # - chooses the last possible multitake for maximum take-age
+            ListOfMoves[NumberOfMoves].Piece = multiTakeLeft[-1][0]
             ListOfMoves[NumberOfMoves].NewRow = multiTakeLeft[-1][1]
             ListOfMoves[NumberOfMoves].NewColumn = multiTakeLeft[-1][2]
             ListOfMoves[NumberOfMoves].CanJump = True
@@ -319,7 +329,8 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             ListOfMoves[NumberOfMoves].CanJump = True
         if len(multiTakeRight2) > 0:
             NumberOfMoves += 1
-            print(multiTakeRight2[-1][0], ' can take and move to ', multiTakeRight2[-1][1], ' , ', multiTakeRight2[-1][2])
+            print(multiTakeRight2[-1][0], ' can take and move to ', multiTakeRight2[-1][1], ' , ',
+                  multiTakeRight2[-1][2])
             ListOfMoves[NumberOfMoves].Piece = multiTakeRight2[-1][0]
             ListOfMoves[NumberOfMoves].NewRow = multiTakeRight2[-1][1]
             ListOfMoves[NumberOfMoves].NewColumn = multiTakeRight2[-1][2]
@@ -433,32 +444,32 @@ def MovePiece(Board, PlayersPieces, ChosenPiece, NewRow, NewColumn):
 
 
 def MakeMove(Board, PlayersPieces, OpponentsPieces, ListOfMoves, PieceIndex):
-  PlayersPieces[0][0] += 1
-  if PieceIndex > 0:
-    Piece = ListOfMoves[PieceIndex].Piece
-    NewRow = ListOfMoves[PieceIndex].NewRow
-    NewColumn = ListOfMoves[PieceIndex].NewColumn
-    PlayersPieceIndex = int(Piece[1:])
-    CurrentRow = PlayersPieces[PlayersPieceIndex][ROW]
-    CurrentColumn = PlayersPieces[PlayersPieceIndex][COLUMN]
-    Jumping = ListOfMoves[PieceIndex].CanJump
-    Board, PlayersPieces = MovePiece(Board, PlayersPieces, Piece, NewRow, NewColumn)
-    if Jumping:
-      MiddlePieceRow = (CurrentRow + NewRow) // 2
-      MiddlePieceColumn = (CurrentColumn + NewColumn) // 2
-      MiddlePiece = Board[MiddlePieceRow][MiddlePieceColumn]
-      Player = Piece[0].lower()
-      if Player == 'a':
-        OppositePiecePlayer = 'b'
-      else:
-        OppositePiecePlayer = 'a'
-      if MiddlePiece[:1] == OppositePiecePlayer:
-          Board[MiddlePieceRow][MiddlePieceColumn] = SPACE
-      StolenPieceNumber = int(MiddlePiece[1:])
-      OpponentsPieces[StolenPieceNumber][0]=-1
-      OpponentsPieces[StolenPieceNumber][1]=-1
-      print('jumped over ', MiddlePiece)
-  return Board, PlayersPieces, OpponentsPieces
+    PlayersPieces[0][0] += 1
+    if PieceIndex > 0:
+        Piece = ListOfMoves[PieceIndex].Piece
+        NewRow = ListOfMoves[PieceIndex].NewRow
+        NewColumn = ListOfMoves[PieceIndex].NewColumn
+        PlayersPieceIndex = int(Piece[1:])
+        CurrentRow = PlayersPieces[PlayersPieceIndex][ROW]
+        CurrentColumn = PlayersPieces[PlayersPieceIndex][COLUMN]
+        Jumping = ListOfMoves[PieceIndex].CanJump
+        Board, PlayersPieces = MovePiece(Board, PlayersPieces, Piece, NewRow, NewColumn)
+        if Jumping:
+            MiddlePieceRow = (CurrentRow + NewRow) // 2
+            MiddlePieceColumn = (CurrentColumn + NewColumn) // 2
+            MiddlePiece = Board[MiddlePieceRow][MiddlePieceColumn]
+            Player = Piece[0].lower()
+            if Player == 'a':
+                OppositePiecePlayer = 'b'
+            else:
+                OppositePiecePlayer = 'a'
+            if MiddlePiece[:1] == OppositePiecePlayer:
+                Board[MiddlePieceRow][MiddlePieceColumn] = SPACE
+            StolenPieceNumber = int(MiddlePiece[1:])
+            OpponentsPieces[StolenPieceNumber][0] = -1
+            OpponentsPieces[StolenPieceNumber][1] = -1
+            print('jumped over ', MiddlePiece)
+    return Board, PlayersPieces, OpponentsPieces
 
 
 def SwapPlayer(NextPlayer):

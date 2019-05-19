@@ -399,14 +399,12 @@ def welcome():
     print('#' * 20)
 
 def StartPlayer():
-    try:
-        player = input("Please enter the letter of the first player: ")
-        if player != 'a' and player != 'b' and player != 'A' and player != 'B':
-            DisplayErrorCode(7)
-            return StartPlayer()
-    except:
+
+    player = input("Please enter the letter of the first player: ")
+    if player != 'a' and player != 'b' and player != 'A' and player != 'B':
         DisplayErrorCode(6)
         return StartPlayer()
+
 
     return player.lower()
 

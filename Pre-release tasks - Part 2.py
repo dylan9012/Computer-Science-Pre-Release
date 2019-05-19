@@ -25,7 +25,6 @@ class MoveRecord:
         self.CanJump = False
 
 
-
 def LoadPieces(FileHandle, PlayersPieces):
     for Index in range(NUMBER_OF_PIECES + 1):
         PlayersPieces[Index][ROW] = int(FileHandle.readline())
@@ -197,14 +196,13 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
         CurrentColumn = PlayersPieces[i][COLUMN]
         if PlayersPieces[i][DAME] == 1:
 
-            #Moving Backwards
+            # Moving Backwards
             Piece = Piece.upper()
             Direction2 = Direction * -1
             NewRow2 = CurrentRow + Direction2
             LeftColumn = CurrentColumn - 1
             RightColumn = CurrentColumn + 1
 
-            
             if ValidMove(Board, NewRow2, LeftColumn):
                 print(Piece, ' can move to ', NewRow2, ' , ', LeftColumn)
                 NumberOfMoves += 1
@@ -236,14 +234,14 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
                 ListOfMoves[NumberOfMoves].NewRow = JumpRow2
                 ListOfMoves[NumberOfMoves].NewColumn = JumpRightColumn2
                 ListOfMoves[NumberOfMoves].CanJump = True
-            
-#-------------------------------------------------------------------------------------------            
-            
-        #Moving Forwards
+
+        # -------------------------------------------------------------------------------------------
+
+        # Moving Forwards
         NewRow = CurrentRow + Direction
         LeftColumn = CurrentColumn - 1
         RightColumn = CurrentColumn + 1
-        
+
         if ValidMove(Board, NewRow, LeftColumn):
             print(Piece, ' can move to ', NewRow, ' , ', LeftColumn)
             NumberOfMoves += 1
@@ -261,7 +259,7 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
         JumpRow = CurrentRow + Direction + Direction
         JumpLeftColumn = CurrentColumn - 2
         JumpRightColumn = CurrentColumn + 2
-        if ValidJump(Board, PlayersPieces, Piece,JumpRow, JumpLeftColumn):
+        if ValidJump(Board, PlayersPieces, Piece, JumpRow, JumpLeftColumn):
             print(Piece, ' can jump to ', JumpRow, ' , ', JumpLeftColumn)
             NumberOfMoves += 1
             ListOfMoves[NumberOfMoves].Piece = Piece
@@ -278,7 +276,7 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
     print('There are ', NumberOfMoves, ' possible moves')
     return ListOfMoves
 
-    
+
 def ListEmpty(ListOfMoves):
     if ListOfMoves[1].Piece == '':
         return True
@@ -387,12 +385,10 @@ def MakeMove(Board, PlayersPieces, OpponentsPieces, ListOfMoves, PieceIndex):
 
             if (Piece[0] == 'a' and MiddlePiece[0] == 'b') or (Piece[0] == 'b' and MiddlePiece[0] == 'a'):
                 Index = int(MiddlePiece[1:])
-                OpponentsPieces[Index][0] = -1
-                OpponentsPieces[Index][1] = -1
+                OpponentsPieces[Index][ROW] = -1
+                OpponentsPieces[Index][COLUMN] = -1
                 Board[MiddlePieceRow][MiddlePieceColumn] = ''
                 PlayersPieces[0][2] += 1
-
-
 
     return Board, PlayersPieces, OpponentsPieces
 
@@ -450,9 +446,10 @@ def Game():
     if FileFound:
         PrintResult(A, B, NextPlayer)
 
-def Save(Board,A,B,filename):
+
+def Save(Board, A, B, filename):
     if ".txt" not in filename:
-        filename+= ".txt"
+        filename += ".txt"
     FileHandle = open(filename, 'w+')
     for item in A:
         for i in item:
@@ -461,8 +458,6 @@ def Save(Board,A,B,filename):
         for i in item:
             FileHandle.write(str(i) + "\n")
     FileHandle.close
-    
-    
 
 
 if __name__ == "__main__":
