@@ -51,8 +51,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Pre-release tasks - Part 5.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="341" column="28" selection-start-line="341" selection-start-column="28" selection-end-line="341" selection-end-column="28" />
+            <state relative-caret-position="732">
+              <caret line="423" lean-forward="true" selection-start-line="423" selection-end-line="423" />
             </state>
           </provider>
         </entry>
@@ -241,7 +241,7 @@
       <workItem from="1557338851497" duration="4748000" />
       <workItem from="1558107793681" duration="2537000" />
       <workItem from="1558203368981" duration="15545000" />
-      <workItem from="1558264122256" duration="5345000" />
+      <workItem from="1558264122256" duration="5742000" />
     </task>
     <task id="LOCAL-00001" summary="Comments">
       <created>1558208662233</created>
@@ -310,7 +310,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28175000" />
+    <option name="totallyTimeSpent" value="28572000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -323,13 +323,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="961" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49852508" visible="true" weight="0.17039403" />
-      <window_info id="Structure" order="1" sideWeight="0.5014749" side_tool="true" visible="true" weight="0.17039403" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49942464" visible="true" weight="0.17039403" />
+      <window_info id="Structure" order="1" sideWeight="0.50057536" side_tool="true" visible="true" weight="0.17039403" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.6098964" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.6098964" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -427,8 +428,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Pre-release tasks - Part 5.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="341" column="28" selection-start-line="341" selection-start-column="28" selection-end-line="341" selection-end-column="28" />
+        <state relative-caret-position="732">
+          <caret line="423" lean-forward="true" selection-start-line="423" selection-end-line="423" />
         </state>
       </provider>
     </entry>
