@@ -171,20 +171,21 @@ def ValidJump(Board, PlayersPieces, Piece, NewRow, NewColumn):
     Valid = False
     MiddlePiece = ''
     Player = Piece[0].lower()
-    Index = int(Piece[1:])
+    Index = int(Piece[1:])  # - Strips first piece number
     if Player == 'a':
         OppositePiecePlayer = 'b'
     else:
         OppositePiecePlayer = 'a'
-    if NewRow in range(BOARD_SIZE) and NewColumn in range(BOARD_SIZE):
-        if Board[NewRow][NewColumn] == SPACE:
-            CurrentRow = PlayersPieces[Index][ROW]
-            CurrentColumn = PlayersPieces[Index][COLUMN]
-            MiddlePieceRow = (CurrentRow + NewRow) // 2
-            MiddlePieceColumn = (CurrentColumn + NewColumn) // 2
-            MiddlePiece = Board[MiddlePieceRow][MiddlePieceColumn]
-            MiddlePiecePlayer = MiddlePiece[0].lower()
-            if MiddlePiecePlayer != OppositePiecePlayer and MiddlePiecePlayer != ' ':
+    if NewRow in range(BOARD_SIZE) and NewColumn in range(BOARD_SIZE):  # - Checks if position is in board
+        if Board[NewRow][NewColumn] == SPACE:  # - Checks if position is empty
+            CurrentRow = PlayersPieces[Index][ROW]  # - Takes index from piece and fetches its row on the board
+            CurrentColumn = PlayersPieces[Index][COLUMN]  # - Takes index from piece and fetches its column on the board
+            MiddlePieceRow = (CurrentRow + NewRow) // 2  # - Averages rows to get middle row
+            MiddlePieceColumn = (CurrentColumn + NewColumn) // 2  # - Averages columns to get middle column
+            MiddlePiece = Board[MiddlePieceRow][MiddlePieceColumn]  # - Fetches the piece located at these coordinates
+            MiddlePiecePlayer = MiddlePiece[0].lower()  # - Sets up for comparison
+            if MiddlePiecePlayer != OppositePiecePlayer and MiddlePiecePlayer != ' ':  # -  If the middle piece does
+                # not belong to the opposition and it is not a space then it is valid
                 Valid = True
     return Valid
 
@@ -208,39 +209,41 @@ def ListPossibleMoves(Board, PlayersPieces, NextPlayer, ListOfMoves):
             print(Piece, ' can move to ', NewRow, ' , ', LeftColumn)
             NumberOfMoves += 1  # - Updates counter
             ListOfMoves[NumberOfMoves].Piece = Piece  # - Adds piece for this move
-            ListOfMoves[NumberOfMoves].NewRow = NewRow  # -
-            ListOfMoves[NumberOfMoves].NewColumn = LeftColumn
-            ListOfMoves[NumberOfMoves].CanJump = False
-        if ValidMove(Board, NewRow, RightColumn):
+            ListOfMoves[NumberOfMoves].NewRow = NewRow  # - Adds row for this move
+            ListOfMoves[NumberOfMoves].NewColumn = LeftColumn  # - Adds column for this move
+            ListOfMoves[NumberOfMoves].CanJump = False  # - Adds jump status (unable)
+        if ValidMove(Board, NewRow, RightColumn):  # - Checks if the right column move is a space or exists on board
             print(Piece, ' can move to ', NewRow, ' , ', RightColumn)
             NumberOfMoves += 1
-            ListOfMoves[NumberOfMoves].Piece = Piece
-            ListOfMoves[NumberOfMoves].NewRow = NewRow
-            ListOfMoves[NumberOfMoves].NewColumn = RightColumn
-            ListOfMoves[NumberOfMoves].CanJump = False
-        JumpRow = CurrentRow + Direction + Direction
-        JumpLeftColumn = CurrentColumn - 2
-        JumpRightColumn = CurrentColumn + 2
-        if ValidJump(Board, PlayersPieces, Piece, JumpRow, JumpLeftColumn):
+            ListOfMoves[NumberOfMoves].Piece = Piece  # - Adds piece for this move
+            ListOfMoves[NumberOfMoves].NewRow = NewRow  # - Adds row for this move
+            ListOfMoves[NumberOfMoves].NewColumn = RightColumn  # - Adds column for this move
+            ListOfMoves[NumberOfMoves].CanJump = False  # - Adds jump status (unable)
+        JumpRow = CurrentRow + Direction + Direction  # - Sets jump row, two rows ahead in relative direction
+        JumpLeftColumn = CurrentColumn - 2  # - Sets jump column, two columns to the left
+        JumpRightColumn = CurrentColumn + 2  # - Sets jump column, two columns to the right
+        if ValidJump(Board, PlayersPieces, Piece, JumpRow, JumpLeftColumn):  # - Checks if the jump can be made on
+            # left column
             print(Piece, ' can jump to ', JumpRow, ' , ', JumpLeftColumn)
-            NumberOfMoves += 1
-            ListOfMoves[NumberOfMoves].Piece = Piece
-            ListOfMoves[NumberOfMoves].NewRow = JumpRow
-            ListOfMoves[NumberOfMoves].NewColumn = JumpLeftColumn
-            ListOfMoves[NumberOfMoves].CanJump = True
-        if ValidJump(Board, PlayersPieces, Piece, JumpRow, JumpRightColumn):
+            NumberOfMoves += 1  # - Updates counter
+            ListOfMoves[NumberOfMoves].Piece = Piece  # - Adds piece for this jump
+            ListOfMoves[NumberOfMoves].NewRow = JumpRow  # - Adds row for this jump
+            ListOfMoves[NumberOfMoves].NewColumn = JumpLeftColumn  # - Adds column for this jump
+            ListOfMoves[NumberOfMoves].CanJump = True  # - Adds jump status (able)
+        if ValidJump(Board, PlayersPieces, Piece, JumpRow, JumpRightColumn):  # - Checks if the jump can be made on
+            # right column
             print(Piece, ' can jump to ', JumpRow, ' , ', JumpRightColumn)
-            NumberOfMoves += 1
-            ListOfMoves[NumberOfMoves].Piece = Piece
-            ListOfMoves[NumberOfMoves].NewRow = JumpRow
-            ListOfMoves[NumberOfMoves].NewColumn = JumpRightColumn
-            ListOfMoves[NumberOfMoves].CanJump = True
+            NumberOfMoves += 1  # - Updates counter
+            ListOfMoves[NumberOfMoves].Piece = Piece  # - Adds piece for this jump
+            ListOfMoves[NumberOfMoves].NewRow = JumpRow  # - Adds row for this jump
+            ListOfMoves[NumberOfMoves].NewColumn = JumpRightColumn  # - Adds column for this jump
+            ListOfMoves[NumberOfMoves].CanJump = True  # - Adds jump status (able)
     print('There are ', NumberOfMoves, ' possible moves')
     return ListOfMoves
 
 
 def ListEmpty(ListOfMoves):
-    if ListOfMoves[1].Piece == '':
+    if ListOfMoves[1].Piece == '':  # - Checks if first possible move has been entered
         return True
     else:
         return False
@@ -251,98 +254,105 @@ def SelectMove(ListOfMoves):
     while not ValidPiece:
         Found = False
         EndOfList = False
-        Piece = input('Which piece do you want to move? ')
-        Index = 0
-        if Piece == '':
+        Piece = input('Which piece do you want to move? ')  # - Prompts user which piece to move
+        Index = 0  # - Used as counter
+        if Piece == '':  # - Checks if nothing was entered
             EndOfList = True
         while not Found and not EndOfList:
+            print(Index)
             Index += 1
-            if ListOfMoves[Index].Piece == Piece:
+            if ListOfMoves[Index].Piece == Piece:  # - Loops through list of moves to find if it has a possible move
                 Found = True
-            elif ListOfMoves[Index].Piece == '':
+            elif ListOfMoves[Index].Piece == '':  # - Checks if at end of list of moves to determine it does not have
+                # a possible move
                 EndOfList = True
-                DisplayErrorCode(1)
+                DisplayErrorCode(1)  # - Piece cannot move
         if Found:
             ValidPiece = True
     ChosenPieceIndex = Index
     ValidMove = False
     while not ValidMove:
-        RowString = input('Which row do you want to move to? ')
-        ColumnString = input('Which column do you want to move to? ')
+        RowString = input('Which row do you want to move to? ')  # - Prompts to enter row
+        ColumnString = input('Which column do you want to move to? ')  # - Prompts to enter column
         try:
-            NewRow = int(RowString)
-            NewColumn = int(ColumnString)
+            NewRow = int(RowString)  # - Converts row to integer
+            NewColumn = int(ColumnString)  # Converts column to integer
             Found = False
             EndOfList = False
-            Index = ChosenPieceIndex - 1
+            Index = ChosenPieceIndex - 1  # Sets new range within list of moves (first occurrence of piece to end)
             while not Found and not EndOfList:
-                Index += 1
-                if ListOfMoves[Index].Piece != Piece:
+                Index += 1  # - Used as counter
+                if ListOfMoves[Index].Piece != Piece:  # - Finds end of last occurrence of piece (Piece moves are next
+                    # to each other) to determine the move is not possible
                     EndOfList = True
-                    DisplayErrorCode(2)
-                elif ListOfMoves[Index].NewRow == NewRow and ListOfMoves[Index].NewColumn == NewColumn:
+                    DisplayErrorCode(2)  # - Piece is found but invalid move
+                elif ListOfMoves[Index].NewRow == NewRow and ListOfMoves[Index].NewColumn == NewColumn:  # - Confirms
+                    # coordinates to make selection valid
                     Found = True
             ValidMove = Found
         except:
-            DisplayErrorCode(3)
+            DisplayErrorCode(3)  # - Triggered if row and column prompts are not integers
     return Index
 
 
 def MoveDame(Board, Player, NewRow, NewColumn):
     if Player == 'a':
-        for i in [1, 3, 5, 7]:
-            if Board[0][i] == SPACE:
-                NewColumn = i
-                NewRow = 0
+        for i in [1, 3, 5, 7]:  # - Checks positions on board with spaces on it (when set up)
+            if Board[0][i] == SPACE:  # - Checks if it is a space
+                NewColumn = i  # - Sets new column
+                NewRow = 0  # - Sets to beginning of board
                 break
     else:
-        for i in [0, 2, 4, 6]:
-            if Board[BOARD_SIZE - 1][i] == SPACE:
-                NewColumn = i
-                NewRow = BOARD_SIZE - 1
+        for i in [0, 2, 4, 6]:  # - Checks positions on board with spaces on it (when set up)
+            if Board[BOARD_SIZE - 1][i] == SPACE:  # - Checks if it is a space
+                NewColumn = i  # - Sets new column
+                NewRow = BOARD_SIZE - 1  # - Sets to end of board
                 break
     return NewRow, NewColumn
 
 
 def MovePiece(Board, PlayersPieces, ChosenPiece, NewRow, NewColumn):
-    Index = int(ChosenPiece[1:])
-    CurrentRow = PlayersPieces[Index][ROW]
-    CurrentColumn = PlayersPieces[Index][COLUMN]
-    Board[CurrentRow][CurrentColumn] = SPACE
+    Index = int(ChosenPiece[1:])  # -  Strips for the piece number
+    CurrentRow = PlayersPieces[Index][ROW]  # - Fetches the row from player pieces
+    CurrentColumn = PlayersPieces[Index][COLUMN]  # - Fetches the column from player pieces
+    Board[CurrentRow][CurrentColumn] = SPACE  # - Changes the position of the piece to a space
 
-    if NewRow == BOARD_SIZE - 1 and PlayersPieces[Index][DAME] == 0:
+    if NewRow == BOARD_SIZE - 1 and PlayersPieces[Index][DAME] == 0:  # - Checks if piece is at the end of of the
+        # board to make it a dame
         Player = 'a'
-        PlayersPieces[0][1] += 1
-        PlayersPieces[Index][DAME] = 1
-        ChosenPiece = ChosenPiece.upper()
+        PlayersPieces[0][1] += 1  # - Adds one to number of dames in stats
+        PlayersPieces[Index][DAME] = 1  # - Updates dame status on piece
+        ChosenPiece = ChosenPiece.upper()  # - Capitalises piece
         NewRow, NewColumn = MoveDame(Board, Player, NewRow, NewColumn)
-    elif NewRow == 0 and PlayersPieces[Index][DAME] == 0:
+    elif NewRow == 0 and PlayersPieces[Index][DAME] == 0:  # - Checks if piece is at the end of of the
+        # board to make it a dame
         Player = 'b'
-        PlayersPieces[0][1] += 1
-        PlayersPieces[Index][DAME] = 1
-        ChosenPiece = ChosenPiece.upper()
-        NewRow, NewColumn = MoveDame(Board, Player, NewRow, NewColumn)
-    PlayersPieces[Index][ROW] = NewRow
-    PlayersPieces[Index][COLUMN] = NewColumn
-    Board[NewRow][NewColumn] = ChosenPiece
+        PlayersPieces[0][1] += 1  # - Adds one to number of dames in stats
+        PlayersPieces[Index][DAME] = 1  # - Updates dame status on piece
+        ChosenPiece = ChosenPiece.upper()  # - Capitalises piece
+        NewRow, NewColumn = MoveDame(Board, Player, NewRow, NewColumn)  # - Moves dame back to start of board
+    PlayersPieces[Index][ROW] = NewRow  # - Puts the piece in the new row
+    PlayersPieces[Index][COLUMN] = NewColumn  # - Puts the piece in the new column
+    Board[NewRow][NewColumn] = ChosenPiece  # - Puts piece in new position on board
     return Board, PlayersPieces
 
 
 def MakeMove(Board, PlayersPieces, OpponentsPieces, ListOfMoves, PieceIndex):
-    PlayersPieces[0][0] += 1
+    PlayersPieces[0][0] += 1  # - Adds to number of moves in stats
     if PieceIndex > 0:
-        Piece = ListOfMoves[PieceIndex].Piece
-        NewRow = ListOfMoves[PieceIndex].NewRow
-        NewColumn = ListOfMoves[PieceIndex].NewColumn
-        PlayersPieceIndex = int(Piece[1:])
-        CurrentRow = PlayersPieces[PlayersPieceIndex][ROW]
-        CurrentColumn = PlayersPieces[PlayersPieceIndex][COLUMN]
-        Jumping = ListOfMoves[PieceIndex].CanJump
-        Board, PlayersPieces = MovePiece(Board, PlayersPieces, Piece, NewRow, NewColumn)
+        Piece = ListOfMoves[PieceIndex].Piece  # - Fetches the piece of the selected move index
+        NewRow = ListOfMoves[PieceIndex].NewRow  # - Fetches the row of the selected move index
+        NewColumn = ListOfMoves[PieceIndex].NewColumn  # - Fetches the column of the selected move index
+        PlayersPieceIndex = int(Piece[1:])  # - Strips to get piece number
+        CurrentRow = PlayersPieces[PlayersPieceIndex][ROW]  # - Fetches the current row of piece
+        CurrentColumn = PlayersPieces[PlayersPieceIndex][COLUMN]  # - Fetches the current column of piece
+        Jumping = ListOfMoves[PieceIndex].CanJump  # - Checks if the piece can jump
+        Board, PlayersPieces = MovePiece(Board, PlayersPieces, Piece, NewRow, NewColumn)  # - Manipulates board to
+        # move pieces
         if Jumping:
-            MiddlePieceRow = (CurrentRow + NewRow) // 2
-            MiddlePieceColumn = (CurrentColumn + NewColumn) // 2
-            MiddlePiece = Board[MiddlePieceRow][MiddlePieceColumn]
+            MiddlePieceRow = (CurrentRow + NewRow) // 2  # - Averages rows to find the middle row
+            MiddlePieceColumn = (CurrentColumn + NewColumn) // 2  # - Averages columns to find the middle column
+            MiddlePiece = Board[MiddlePieceRow][MiddlePieceColumn]  # - Fetches the piece from the board
             print('jumped over ', MiddlePiece)
     return Board, PlayersPieces, OpponentsPieces
 
@@ -356,7 +366,7 @@ def SwapPlayer(NextPlayer):
 
 def PrintResult(A, B, NextPlayer):
     print('Game ended')
-    print(NextPlayer, ' lost this game as they cannot make a move')
+    print(NextPlayer, ' lost this game as they cannot make a move')  # - Chooses current player to win
     PrintPlayerPieces(A, B)
 
 
@@ -382,23 +392,23 @@ def Game():
         if NextPlayer == 'a':
             ListOfMoves = ListPossibleMoves(Board, A, NextPlayer, ListOfMoves)  # - Generates all the possible moves
             # each piece can make
-            if not ListEmpty(ListOfMoves):
-                PieceIndex = SelectMove(ListOfMoves)
-                Board, A, B = MakeMove(Board, A, B, ListOfMoves, PieceIndex)
-                NextPlayer = SwapPlayer(NextPlayer)
+            if not ListEmpty(ListOfMoves):  # - Checks if a move can be made
+                PieceIndex = SelectMove(ListOfMoves)  # - Validates and chooses move
+                Board, A, B = MakeMove(Board, A, B, ListOfMoves, PieceIndex)  # - Moves the piece to selected move
+                NextPlayer = SwapPlayer(NextPlayer)  # - Swaps player for next turn
             else:
-                GameEnd = True
+                GameEnd = True  # If no list of moves is empty, the end of the game is reached
         else:
-            ListOfMoves = ListPossibleMoves(Board, B, NextPlayer, ListOfMoves)
+            ListOfMoves = ListPossibleMoves(Board, B, NextPlayer, ListOfMoves)  # - Checks if a move can be made
             if not ListEmpty(ListOfMoves):
-                PieceIndex = SelectMove(ListOfMoves)
-                Board, B, A = MakeMove(Board, B, A, ListOfMoves, PieceIndex)
-                NextPlayer = SwapPlayer(NextPlayer)
+                PieceIndex = SelectMove(ListOfMoves)  # - Validates and chooses move
+                Board, B, A = MakeMove(Board, B, A, ListOfMoves, PieceIndex)  # - Moves the piece to selected move
+                NextPlayer = SwapPlayer(NextPlayer)  # - Swaps player for next turn
             else:
-                GameEnd = True
+                GameEnd = True  # If no list of moves is empty, the end of the game is reached
     if FileFound:
         PrintResult(A, B, NextPlayer)
 
 
-if __name__ == "__main__":  # - Makes the game executable only when it is run independantly
+if __name__ == "__main__":  # - Makes the game executable only when it is run independently
     Game()
