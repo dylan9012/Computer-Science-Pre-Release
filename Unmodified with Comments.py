@@ -106,7 +106,7 @@ def PrintHeading():
 def PrintRow(Board, ThisRow):
     print('   |', end='')
     for BoardColumn in range(BOARD_SIZE):  # -  0 to 7
-        if Board[ThisRow][BoardColumn] == UNUSED:
+          if Board[ThisRow][BoardColumn] == UNUSED:
             print(Board[ThisRow][BoardColumn], end='|')  # - Puts unused if unused
         else:
             print(SPACE, end='|')  # - Puts space if space
@@ -150,7 +150,8 @@ def PrintPlayerPieces(A, B):
     print()
 
 
-def ClearList(ListOfMoves):
+def ClearList(ListOfMoves):  # - Each index of the object list of moves is initialised to not have the opposition
+    # overwrite their moves onto the player's (remaining moves can still exist and remain on the opponents turn)
     for Index in range(MAX_MOVES):
         ListOfMoves[Index].Piece = ''
         ListOfMoves[Index].NewRow = -1
